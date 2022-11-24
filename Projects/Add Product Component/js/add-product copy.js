@@ -1,20 +1,23 @@
 let count = 0,
   quantity,
   vQuantity = 0;
-  let price;
 function add_Product() {
   let Pname,
+    price,
     item,
     total = 0;
   Pname = document.getElementById("ed_pname").value;
   price = document.getElementById("ed_price").value;
   quantity = document.getElementById("ed_quantity").value;
 
-
+  //   check_Number(price,quantity);
 
   if (Pname.length != 0 && price.length != 0 && quantity.length != 0) {
-    
-    if  ( isNumeric(price)&& isNumeric(quantity)) {
+    //   alert(typeof(7));
+
+    const regex = new RegExp(/[^0-9]/, "g");
+
+    if (!price.match(regex)) {
       var table = document.getElementById("Product_table");
       var row = table.insertRow();
       var cell = row.insertCell();
@@ -48,11 +51,11 @@ function add_Product() {
     } else {
       alert("Only Numbers Allowed");
     }
-  }
-   else {
+  } else {
     alert("please fill in the required information");
   }
 
+  //   cell.innerHTML = "<button>Remove</button>";
 }
 
 function increaseQ(q) {
@@ -62,11 +65,4 @@ function increaseQ(q) {
 function remove_Product(item) {
   var table = document.getElementById("Product_table");
   var row = table.deleteRow(item);
-}
-
-
-
-
-function isNumeric(value) {
-  return /^-?\d+$/.test(value);
 }
