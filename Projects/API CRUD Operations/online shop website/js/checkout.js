@@ -58,7 +58,7 @@
      let order=getElement();
 
      console.log(`${order.last_name}`)
-    const response = await fetch("http://127.0.0.1:5000/api/orders/", {
+    const response = await fetch("http://localhost:5000/api/orders/", {
         method: "POST",
         headers: {
          'Accept': 'application/json',
@@ -78,6 +78,8 @@
             "state":order.state,
             "zip_code":order.zip_code,
           },
+          "_id": localStorage.getItem("userID"),
+
           "sub_total_price":order.total_price,
           "shipping": order.shipping,
           "total_price": order.total_price,
