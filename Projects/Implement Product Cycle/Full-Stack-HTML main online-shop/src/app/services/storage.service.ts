@@ -13,31 +13,41 @@ export class StorageService {
 
   constructor() {}
 
+  
   addProducts(product: Product, quantity: number) {
     //Add product to Localstorage as flat products (array of products not cartLines)
-    this.listArray.push([{product:product,quantity:quantity}]);
-    localStorage.setItem("ProductDetails",JSON.stringify(this.listArray));
- 
+    const products: Product[] = this.getProducts();
+    for (let i = 0; i < quantity; i++) {
+      products.push(product);
+    }
+    localStorage.setItem('products', JSON.stringify(products));
   }
 
   getCartLines(): CartLine[] {
     //Convert Array of products into cart lines array and return it
-    let serviceProduct = localStorage.getItem("ProductDetails")
-    if(serviceProduct != null ){
-      this.products = JSON.parse(serviceProduct);
-     
-      this.products.forEach(data => {         // data[0].quantity <--- *{Get product Quantity}*
-         let cartItem: CartLine = {
-          product: data[0].product[0].product,
-          quantity: data[0].product[0].quantity,
-          price:  data[0].product[0].price
-        }
-        this.cartProducts.push(cartItem);
+    const products: Product[] = this.getProducts();
+    const cartLines: CartLine[] = [];
+    products.forEach((p) => {
+      const oldProduct = cartLines.findIndex((x) => x.product._id === p._id);
+      if (oldProduct >= 0) {
+        cartLines[oldProduct].quantity += 1;
+      } else {
+        cartLines.push({
+          price: p.price,
+          product: p,
+          quantity: 1,
+        });
+      }
     });
-    return this.cartProducts
-    }
-    else{
-    return [];
-    }
+    return cartLines;
   }
+
+
+  getProducts(): Product[] {
+    return JSON.parse(localStorage.getItem('products') || '[]');
+  } 
+
 }
+
+
+
