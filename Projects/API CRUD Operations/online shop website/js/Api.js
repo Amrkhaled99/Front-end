@@ -1,34 +1,3 @@
-
-const userLogin=async()=>{
-  
-  fetch ('http://localhost:5000/api/users/login/', {
-     method: "POST",
-     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-  },
-     body: JSON.stringify({
-       email:"ramymibrahim@yahoo.com" ,
-       password: "123456"
-    } ),
-})
-  .then((response) => response.json())
-  .then((result) => {
-    if(result.message === "SUCCESS"){
-      alert("You are logged in.");
-      this.goToMain();
-     } else {
-         alert("Please check your login information.");
-        }
-      });
-
-    }
-
-
-
-
-
-
 const getAllProduct = async()=>{
   const request = fetch("http://127.0.0.1:5000/api/products/getFeatured/")
   let response = await request;
@@ -39,9 +8,6 @@ const getAllProduct = async()=>{
 
 try{
   getAllProduct();
-  userLogin();
-
-  // userLogin();
 }
 catch (error) {
   console.log(error);
