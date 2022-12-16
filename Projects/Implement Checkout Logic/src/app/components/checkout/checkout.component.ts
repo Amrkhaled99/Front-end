@@ -91,7 +91,7 @@ export class CheckoutComponent {
 
     this.authService.sendCheckOut(this.Order_data,this.authService.getToken()).subscribe({
       next(data:any){
-        console.log(data);
+        
       }
     })
 
